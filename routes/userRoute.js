@@ -1,21 +1,14 @@
 const { Router } = require('express');
 
+const { userSignupController } = require('../controllers/userController');
+
+
+
 
 const userRouter = Router();
 
-userRouter.post('/signup', async function (req,res){
-    const { email, password, firstName, lastName } = req.body;
-    await userModel.create({
-        email:email,
-        password:password,
-        firstName:firstName,
-        lastName:lastName
-    });
+userRouter.post('/signup', userSignupController);
 
-    res,json({
-        msg:"signup succeeded"
-    })
-});
 
 
 module.exports ={
