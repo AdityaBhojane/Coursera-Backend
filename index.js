@@ -1,28 +1,20 @@
 const express = require("express");
-const mongoose = require("mongoose");
-
-const { userRouter } = require("./routes/userRoute");
-const e = require("express");
-
+const { userRouter } = require("./routes/userRoute.js");
+const { adminRouter } = require("./routes/adminRoute.js");
+const { courseRouter } = require("./routes/courseRoute.js");
+const connectDB = require("./config/db");
 const app = express();
+
 
 app.use(express.json());
 app.use('/api/v1/user', userRouter);
+app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/course", courseRouter);
 
 
-async function main() {
-    try {
-        // connect.then(()=> console.log("connected to db"))
-        app.listen(3000);
-        console.log("server is running...")
-    } catch (error) {
-        res.status(411).json({
-            msg:error.message
-         })
-    }
-}
+const PORT = 3000;
 
-
-mongoose.connect('mongodb://localhost:27017/').then(()=> console.log("connect to db"))
-
-main()
+app.listen(PORT,async ()=>{
+    await connectDB();
+    console.log("server is running ...")
+})
